@@ -59,6 +59,27 @@ from web3.module import (
     Module,
 )
 
+from typing import (
+    Callable,
+    List,
+    Optional,
+    Tuple,
+    Union,
+)
+
+from web3.method import (
+    DeprecatedMethod,
+    Method,
+    default_root_munger,
+)
+from web3._utils.rpc_abi import (
+    RPC,
+)
+
+from web3.types import (
+    BlockIdentifier,
+    GethBlockTrace,
+)
 
 class GethPersonal(Module):
     """
@@ -139,3 +160,19 @@ class GethMiner(Module):
 class Geth(Module):
     personal: GethPersonal
     admin: GethAdmin
+
+    def trace_block_munger(
+        self,
+        block_number: str,
+    ) -> Tuple[str, ]:
+        block_number = str(block_number)
+        if not block_number.startswith('0x'):
+            block_number = hex(int(block_number))
+        return (block_number, )
+
+    trace_block: Method[Callable[[BlockIdentifier], List[GethBlockTrace]]] = Method(
+        RPC.debug_traceBlockByNumber,
+        mungers=[trace_block_munger],
+    )
+
+    traceBlock = DeprecatedMethod(trace_block, 'traceBlock', 'trace_block')

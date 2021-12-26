@@ -139,6 +139,7 @@ class RPC:
 
     # trace
     trace_block = RPCEndpoint("trace_block")
+    debug_traceBlockByNumber = RPCEndpoint("debug_traceBlockByNumber")
     trace_call = RPCEndpoint("trace_call")
     trace_filter = RPCEndpoint("trace_filter")
     trace_rawTransaction = RPCEndpoint("trace_rawTransaction")

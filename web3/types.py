@@ -393,6 +393,7 @@ class TxPoolStatus(TypedDict, total=False):
 # web3.geth types
 #
 
+GethBlockTrace = NewType("GethBlockTrace", Dict[str, Any])
 
 class GethWallet(TypedDict):
     accounts: Sequence[Dict[str, str]]
